@@ -1,14 +1,41 @@
 // ---- Define your dialogs  and panels here ----
+const effective_perms = define_new_effective_permissions('perm_panel', true);
 
+const select_user = define_new_user_select_field('perm_panel_user_select', 'Select User',
+    function (selected_user) {
+        $('#perm_panel').attr('username', selected_user)
+    }
+);
 
+const explained_dialog = define_new_dialog('explained_dialog');
 
 // ---- Display file structure ----
+
+$('#sidepanel').append(effective_perms);
+$('#perm_panel').prepend(select_user);
+$('#perm_panel').attr('filepath', '/C');
+
+$('.perm_info').click(function () {
+    const filepath = $('#perm_panel').attr('filepath');
+    const username = $('#perm_panel').attr('username');
+    const permission_name = $(this).attr('permission_name');
+
+    const my_file_obj_var = path_to_file[filepath];
+    const my_user_obj_var = all_users[username];
+
+    const allowedAction = allow_user_action(my_file_obj_var, my_user_obj_var, permission_name, explain_why = true);
+    const explanation = get_explanation_text(allowedAction);
+    console.log('clicked:', permission_name, filepath, username, allowedAction, explanation);
+    $('#explained_dialog').empty();
+    $('#explained_dialog').append(explanation);
+    explained_dialog.dialog('open')
+});
 
 // (recursively) makes and returns an html element (wrapped in a jquery object) for a given file object
 function make_file_element(file_obj) {
     let file_hash = get_full_path(file_obj)
 
-    if(file_obj.is_folder) {
+    if (file_obj.is_folder) {
         let folder_elem = $(`<div class='folder' id="${file_hash}_div">
             <h3 id="${file_hash}_header">
                 <span class="oi oi-folder" id="${file_hash}_icon"/> ${file_obj.filename} 
@@ -19,10 +46,10 @@ function make_file_element(file_obj) {
         </div>`)
 
         // append children, if any:
-        if( file_hash in parent_to_children) {
+        if (file_hash in parent_to_children) {
             let container_elem = $("<div class='folder_contents'></div>")
             folder_elem.append(container_elem)
-            for(child_file of parent_to_children[file_hash]) {
+            for (child_file of parent_to_children[file_hash]) {
                 let child_elem = make_file_element(child_file)
                 container_elem.append(child_elem)
             }
@@ -39,9 +66,9 @@ function make_file_element(file_obj) {
     }
 }
 
-for(let root_file of root_files) {
+for (let root_file of root_files) {
     let file_elem = make_file_element(root_file)
-    $( "#filestructure" ).append( file_elem);    
+    $("#filestructure").append(file_elem);
 }
 
 
@@ -56,7 +83,7 @@ $('.folder').accordion({
 // -- Connect File Structure lock buttons to the permission dialog --
 
 // open permissions dialog when a permission button is clicked
-$('.permbutton').click( function( e ) {
+$('.permbutton').click(function (e) {
     // Set the path and open dialog:
     let path = e.currentTarget.getAttribute('path');
     perm_dialog.attr('filepath', path)
@@ -66,9 +93,9 @@ $('.permbutton').click( function( e ) {
     // Deal with the fact that folders try to collapse/expand when you click on their permissions button:
     e.stopPropagation() // don't propagate button click to element underneath it (e.g. folder accordion)
     // Emit a click for logging purposes:
-    emitter.dispatchEvent(new CustomEvent('userEvent', { detail: new ClickEntry(ActionEnum.CLICK, (e.clientX + window.pageXOffset), (e.clientY + window.pageYOffset), e.target.id,new Date().getTime()) }))
+    emitter.dispatchEvent(new CustomEvent('userEvent', { detail: new ClickEntry(ActionEnum.CLICK, (e.clientX + window.pageXOffset), (e.clientY + window.pageYOffset), e.target.id, new Date().getTime()) }))
 });
 
 
 // ---- Assign unique ids to everything that doesn't have an ID ----
-$('#html-loc').find('*').uniqueId() 
+$('#html-loc').find('*').uniqueId()
