@@ -12,8 +12,11 @@ const explained_dialog = define_new_dialog('explained_dialog');
 // ---- Display file structure ----
 
 $('#sidepanel').append(effective_perms);
+$('.perm_info').append("Info");
 $('#perm_panel').prepend(select_user);
 $('#perm_panel').attr('filepath', '/C');
+
+$('.permbutton').append($('Permissions'));
 
 $('.perm_info').click(function () {
     const filepath = $('#perm_panel').attr('filepath');
