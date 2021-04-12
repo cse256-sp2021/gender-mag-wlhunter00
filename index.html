@@ -114,11 +114,6 @@
                                     id="adv_effective_tab_elem">Effective Permissions</a></li>
                         </ul>
                         <div id="adv_permissions_tab">
-                            <div>
-                                <i>Enable/disable specfic permissions. First click edit, then click change and select a
-                                    user group, then hit ok.</i>
-                            </div>
-                            <br />
                             <div id="adv_perm_object_name" class="section">Object Name: <span
                                     id="adv_perm_filepath"></span></div>
                             <div id="adv_perm_entries_text">Permission entries:</div>
@@ -133,8 +128,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <button id="adv_perm_edit" class="ui-button ui-widget ui-corner-all">Edit
-                                Permissions</button>
+                            <button id="adv_perm_edit" class="ui-button ui-widget ui-corner-all">Edit...</button>
                             <div id="adv_perm_inheritance_div">
                                 <input type="checkbox" id="adv_perm_inheritance" name="inherit">
                                 <label for="adv_perm_inheritance" id="adv_perm_inheritance_label">Include inheritable
@@ -148,10 +142,6 @@
                             </div>
                         </div>
                         <div id="adv_owner_tab">
-                            <div>
-                                <i>Assign a particular user ownership of this file/folder.</i>
-                            </div>
-                            <br />
                             <div id="adv_owner_explanation" class="section">You can take or assign ownership of this
                                 object if you have the required permissions or privileges.</div>
                             <div id="adv_owner_object_name" class="section">Object Name: <span
@@ -164,11 +154,6 @@
                                 Owner</button>
                         </div>
                         <div id="adv_effective_tab">
-                            <div>
-                                <i>See what permissions are assigned to a user group. First select a user group
-                                    below.</i>
-                            </div>
-                            <br />
                             <div id="adv_effective_object_name" class="section">Object Name: <span
                                     id="adv_effective_filepath"></span></div>
                             <div id="adv_effective_user_text">Group or user name:</div>
@@ -192,7 +177,7 @@
                 <script src="test_model.js"></script>
                 <script id="config-script">
                     const contexts = {
-                        add_full_permissions: 'The user <code>employee3</code> has recently been fired. Please remove this user entirely from the permission settings for <code>important_file.txt</code>.',
+                        add_full_permissions: 'The user <code>new_manager</code> has just joined the team as a manager. You need to give them complete access to the folder <code>presentation_documents</code>, including the ability to change permissions on that folder.',
                         add_new_user: 'The user <code>employee4</code> has just joined the team. You need to give them access to the folder <code>presentation_documents</code>. Their new permissions should be the same as the other employees.',
                         intern_permissions: 'The user <code>intern</code> is a new intern joining the team. They already have read access to the folder <code>important_project</code>. In addition, they need to be able to read and write data, but <em>not</em> delete files, in the folder <code>intern_subproject</code>. Please change the permissions so that they can do this with any files in that folder.',
                         let_ta_modify: 'The user <code>teaching_assistant</code> is a member of the group <code>students</code>. As the teaching assistant for a course, this user should have the ability to write and modify all files in the folder <code>Lecture_Notes</code>. Other students should be able to read all of these files, but not write or modify them. This was set up correctly at the beginning of the course. But now, for some reason, <code>teaching_assistant</code> is currently unable to modify the file <code>Lecture4.txt</code>. Find and fix the problem.',
